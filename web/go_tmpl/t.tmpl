@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板嵌套</title>
+</head>
+<body>
+<h1>测试模板嵌套</h1>
+{{template "ul.tmpl"}}
+<hr>
+{{template "ol.tmpl"}}
+</body>
+</html>
+{{/* 通过define定义模板 */}}
+{{define "ol.tmpl"}}
+    <ol>
+        <li>吃饭</li>
+        <li>睡觉</li>
+        <li>打豆豆</li>
+    </ol>
+{{end}}

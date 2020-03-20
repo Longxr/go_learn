@@ -1,0 +1,7 @@
+{{/*继承跟模板*/}}
+{{template "base.tmpl" .}}
+{{/*重新定义块*/}}
+{{define "content"}}
+    <h1>这是index页面</h1>
+    <p>Hello {{.}}</p>
+{{end}}
