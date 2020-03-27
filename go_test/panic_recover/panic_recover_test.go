@@ -19,3 +19,26 @@ func TestPanicVxExit(t *testing.T) {
 	fmt.Println("Panic after")
 	// os.Exit(-1)
 }
+
+func TestPanicDefer(t *testing.T) {
+	defer func() {
+		fmt.Println("defer 1")
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println("defer 2")
+	}()
+
+	defer func() {
+		fmt.Println("defer 3")
+	}()
+
+	panic("触发异常")
+
+	defer func() {
+		fmt.Println("defer 4")
+	}()
+}
