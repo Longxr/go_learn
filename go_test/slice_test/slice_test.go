@@ -71,3 +71,10 @@ func TestSliceAppend2(t *testing.T) {
 	fmt.Printf("a: %v\tptr: %p\tfirst: %v\n", a, a, a[0])
 	fmt.Printf("b: %v\tptr: %p\tfirst: %v\n", b, b, b[0])
 }
+
+func TestSliceexpression(t *testing.T) {
+	a := [5]int{1, 2, 3, 4, 5}
+	// b := a[1:3:7]
+	b := a[1:3:5]
+	fmt.Printf("b:%v len(b):%v cap(b):%v\n", b, len(b), cap(b))
+}

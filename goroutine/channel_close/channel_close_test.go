@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 	"testing"
+	"time"
 )
 
 func dataProducer(ch chan int, wg *sync.WaitGroup) {
@@ -19,7 +20,8 @@ func dataProducer(ch chan int, wg *sync.WaitGroup) {
 
 func dataReceiver(ch chan int, wg *sync.WaitGroup) {
 	go func() {
-		for i := 0; i < 11; i++ {
+		// for i := 0; i < 11; i++ {
+		for {
 			if data, ok := <-ch; ok {
 				fmt.Println(data)
 			} else {
@@ -41,4 +43,34 @@ func TestCloseChannel(t *testing.T) {
 	wg.Add(1)
 	dataReceiver(ch, &wg)
 	wg.Wait()
+}
+
+func cancel(cancelChan chan struct{}) {
+	close(cancelChan)
+}
+
+func isCancelled(cancelChan chan struct{}) bool {
+	select {
+	case <-cancelChan:
+		return true
+	default:
+		return false
+	}
+}
+
+func TestCancel(t *testing.T) {
+	cancelChan := make(chan struct{}, 0)
+	for i := 0; i < 5; i++ {
+		go func(i int, cancelChan chan struct{}) {
+			for {
+				if isCancelled(cancelChan) {
+					break
+				}
+				time.Sleep(time.Millisecond * 5)
+			}
+			fmt.Println(i, "Chanceled")
+		}(i, cancelChan)
+	}
+	cancel(cancelChan)
+	time.Sleep(time.Second * 1)
 }
