@@ -1,7 +1,7 @@
 package main
 
 import (
-	"logger/mylogger"
+	"go_learn/logger/mylogger"
 )
 
 //全局接口变量
