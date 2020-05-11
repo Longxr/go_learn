@@ -78,7 +78,7 @@ func flvs2mp4(inDir string, outFile string)(err error) {
 	if err = os.RemoveAll(outFile); err != nil {
 		return
 	}
-	if err = os.Mkdir(tsFileDir,0666); err!=nil {
+	if err = os.Mkdir(tsFileDir,0777); err!=nil {
 		return
 	}
 
