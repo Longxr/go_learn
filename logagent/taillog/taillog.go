@@ -3,15 +3,30 @@ package taillog
 import (
 	"fmt"
 	"github.com/hpcloud/tail"
+	"go_learn/logagent/kafka"
+	"time"
 )
 
 // 从日志文件收集日志的模块
 
-var (
-	tailObj *tail.Tail
-)
+// TailTask 日志收集任务
+type TailTask struct {
+	path string
+	topic string
+	instance *tail.Tail
+}
 
-func Init(fileName string)(err error) {
+func NewTailTask(path, topic string) (tailObj *TailTask) {
+	tailObj = &TailTask{
+		path:path,
+		topic:topic,
+	}
+	tailObj.init()
+	return
+}
+
+// 初始化日志收集对象
+func (t *TailTask)init(){
 	config := tail.Config{
 		ReOpen: true,
 		Follow: true,
@@ -19,30 +34,24 @@ func Init(fileName string)(err error) {
 		MustExist: false,
 		Poll: true,
 	}
-	tailObj, err = tail.TailFile(fileName, config)
+	var err error
+	t.instance, err = tail.TailFile(t.path, config)
 	if err != nil {
 		fmt.Println("tail file failed, err:", err)
-		return
 	}
-	return
+	//开启循环发送日志
+	go t.run()
 }
 
-//func ReadLog() {
-//	var (
-//		line *tail.Line
-//		ok bool
-//	)
-//	for {
-//		line, ok = <- tailObj.Lines
-//		if !ok {
-//			fmt.Printf("tail file close reopen, filename: %s\n", tails.Filename)
-//			time.Sleep(time.Second)
-//			continue
-//		}
-//		fmt.Println("line:", line.Text)
-//	}
-//}
-
-func ReadChan() <-chan *tail.Line {
-	return tailObj.Lines
+func (t* TailTask) run() {
+	for {
+		// 读取日志
+		select {
+		case line := <-t.instance.Lines:
+			// 发送日志到kafka
+			kafka.SendToChan(t.topic, line.Text)
+		default:
+			time.Sleep(time.Second)
+		}
+	}
 }
