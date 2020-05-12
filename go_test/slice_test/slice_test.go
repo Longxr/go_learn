@@ -73,20 +73,27 @@ func TestSliceAppend2(t *testing.T) {
 }
 
 func TestSliceAppend3(t *testing.T) {
-	a := make([]int, 20)
-	b := make([]int, 40)
-	a = append(a, b...)
-	fmt.Println(len(a), cap(a))
+	a1 := make([]int, 20)
+	b1 := make([]int, 40)
+	a1 = append(a1, b1...)
+	fmt.Println(len(a1), cap(a1))
 
-	c := make([]int, 20)
-	d := make([]int, 42)
-	c = append(c, d...)
-	fmt.Println(len(c), cap(c))
+	a2 := make([]int, 20)
+	b2 := make([]int, 42)
+	a2 = append(a2, b2...)
+	fmt.Println(len(a2), cap(a2))
 }
 
-func TestSliceexpression(t *testing.T) {
+func TestSliceExpression(t *testing.T) {
 	a := [5]int{1, 2, 3, 4, 5}
 	// b := a[1:3:7]
 	b := a[1:3:5]
 	fmt.Printf("b:%v len(b):%v cap(b):%v\n", b, len(b), cap(b))
+}
+
+func TestSliceDelete(t *testing.T) {
+	a := []int{30, 31, 32, 33, 34, 35, 36, 37}
+	// 要删除索引为2的元素
+	a = append(a[:2], a[3:]...)
+	t.Log(a)
 }
