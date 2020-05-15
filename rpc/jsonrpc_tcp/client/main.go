@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/rpc/jsonrpc"
-	. "go_learn/rpc/jsonrpc/protocol"
+	. "go_learn/rpc/jsonrpc_tcp/protocol"
 )
 
 func main() {

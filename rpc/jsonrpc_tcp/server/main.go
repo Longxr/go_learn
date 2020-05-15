@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	. "go_learn/rpc/jsonrpc/protocol"
+	. "go_learn/rpc/jsonrpc_tcp/protocol"
 	"log"
 	"net"
 	"net/rpc"

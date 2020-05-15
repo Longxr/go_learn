@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"net/rpc"
-	. "go_learn/rpc/http_rpc/protocol"
+	. "go_learn/rpc/rpc_http/protocol"
 )
 
 func main() {
