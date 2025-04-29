@@ -14,7 +14,7 @@ require (
 	github.com/eapache/queue v1.1.0 // indirect
 	github.com/frankban/quicktest v1.9.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
-	github.com/gogo/protobuf v1.3.1 // indirect
+	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.4.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/uuid v1.1.1 // indirect
